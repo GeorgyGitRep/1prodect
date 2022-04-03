@@ -3,15 +3,11 @@ let screens
 let screenPrice
 let rollback = 27
 let adaptive
-
 let service1
 let servicePrice
 let service2
-
-
-let Otcat = 0;
 let fullPrice = 0;
-let servicePercentPrice = fullPrice - Otcat;
+let servicePercentPrice = fullPrice - rollback;
 servicePercentPrice = Math.ceil(servicePercentPrice);
 
 const isNumber = function (num) {
@@ -60,28 +56,25 @@ let getAllServicePrices = function () {
     return sum
 };
 function getFullPrice(screenPrice, allServicePrices) {
-    return screenPrice + allServicePrices
+    return +screenPrice + allServicePrices
 };
 function getTitle(title) {
     title = title.toLowerCase().trim();
     title = title.charAt(0).toUpperCase() + title.slice(1);
     return title
 };
-function getServicePercentPrices(fullPrice, Otcat) {
-    return fullPrice - Otcat
+function getServicePercentPrices(fullPrice, rollback) {
+    return +fullPrice - rollback
 }
 asking();
 title = getTitle(title);
 let allServicePrices = getAllServicePrices();
 fullPrice = getFullPrice(screenPrice, allServicePrices);
-servicePercentPrice = getServicePercentPrices(fullPrice, Otcat);
-
+servicePercentPrice = getServicePercentPrices(fullPrice, rollback);
 showTypeOf(title);
 showTypeOf(fullPrice);
 showTypeOf(adaptive);
-
 getRollbackMessage();
-
 console.log(screens.toLowerCase().split(", "));
 console.log(servicePercentPrice);
 console.log("allServicePrices", allServicePrices);
