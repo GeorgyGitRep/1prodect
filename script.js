@@ -9,6 +9,8 @@ const AppData = {
     servicePrice: 0,
     service2: "",
     fullPrice: 0,
+    servicePercentPrice:0,
+    allServicePrices:0,
     asking: function () {
         AppData.title = prompt("Как называется ваш проект?", "Калькулятор верстки");
         AppData.screens = prompt("Какие типы экранов нужно разработать?", "Простые , сложные");
@@ -53,43 +55,45 @@ const AppData = {
             AppData.servicePrice = +AppData.servicePrice;
             sum += AppData.servicePrice;
         }
-        return sum
+        AppData.allServicePrices= sum
+        return AppData.allServicePrices
     },
 
 
     getFullPrice: function (screenPrice, allServicePrices) {
-        return +screenPrice + allServicePrices
+        AppData.fullPrice= +screenPrice + allServicePrices
     },
 
 
     getTitle: function (title) {
         title = title.toLowerCase().trim();
         title = title.charAt(0).toUpperCase() + title.slice(1);
-        return title
+        AppData.title =  title
     },
     getServicePercentPrices: function (fullPrice, rollback) {
-        return +(fullPrice - rollback)
+        AppData.servicePercentPrice =  Math.ceil(+(fullPrice - rollback))
+        return this.servicePercentPrice
+
     },
     logger: function () {
         showTypeOf(AppData.title);
         showTypeOf(AppData.fullPrice);
         showTypeOf(AppData.adaptive);
         console.log(AppData.screens.toLowerCase().split(", "));
-        console.log(servicePercentPrice);
-        console.log("allServicePrices", allServicePrices);
+        console.log(this.servicePercentPrice);
+        console.log("allServicePrices", this.allServicePrices);
         for (let index in AppData) {
             console.log(index + " " + AppData[index]);
         }
     },
     start: function () {
         this.asking();
-        this.title = this.getTitle(this.title);
-        let: allServicePrices = getAllServicePrices();
-        AppData.fullPrice = this.getFullPrice(AppData.screenPrice, allServicePrices);
-        AppData.servicePercentPrice = this.getServicePercentPrices(AppData.fullPrice, AppData.rollback);
+        this.getTitle(this.title);
+        getAllServicePrices();
+        this.getFullPrice(AppData.screenPrice, this.allServicePrices);
+        this.getServicePercentPrices(AppData.fullPrice, AppData.rollback);
         getRollbackMessage();
-        let: servicePercentPrice = this.getServicePercentPrices(AppData.fullPrice, AppData.rollback)
-        servicePercentPrice = Math.ceil(servicePercentPrice)
+        this.getServicePercentPrices(AppData.fullPrice, AppData.rollback)
         this.logger();
     },
 }
